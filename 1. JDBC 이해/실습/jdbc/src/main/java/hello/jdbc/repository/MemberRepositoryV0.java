@@ -23,7 +23,7 @@ public class MemberRepositoryV0 {
             con = getConnection();
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, member.getMemberId());
-            pstmt.setDouble(2, member.getMoney());
+            pstmt.setInt(2, member.getMoney());
             pstmt.executeUpdate(); // Statement를 통해 준비된 SQL을 커넥션을 통해 실제 DB에 전달
             return member;
         } catch (SQLException e) {
@@ -61,6 +61,46 @@ public class MemberRepositoryV0 {
             throw e;
         } finally {
             close(con, pstmt, rs);
+        }
+    }
+
+    public void update(String memberId, int money) throws SQLException {
+        String sql = "update member set money=? where member_id=?";
+
+        Connection con = null;
+        PreparedStatement pstmt = null; // PreparedStatement는 Statement를 상속 받은 것
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, money);
+            pstmt.setString(2, memberId);
+            int resultSize = pstmt.executeUpdate();// Statement를 통해 준비된 SQL을 커넥션을 통해 실제 DB에 전달
+            log.info("resultSize={}", resultSize);
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(con, pstmt, null);
+        }
+    }
+
+    public void delete(String memberId) throws SQLException {
+        String sql = "delete from member where member_id=?";
+
+        Connection con = null;
+        PreparedStatement pstmt = null; // PreparedStatement는 Statement를 상속 받은 것
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(con, pstmt, null);
         }
     }
 
