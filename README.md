@@ -13,3 +13,10 @@
 - JDBC 개발-등록
 - JDBC 개발-조회
 - JDBC 개발-수정, 삭제
+
+2. 커넥션풀과 데이터소스
+- 커넥션 풀 이해
+- DataSource 이해
+- DataSource 예제1 - DriverManager
+- DataSource 예제2 - 커넥션 풀
+- DataSource 적용
